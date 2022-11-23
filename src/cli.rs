@@ -1,6 +1,6 @@
-use std::path::{PathBuf};
-use structopt::StructOpt;
 use crate::errors::Errcode;
+use std::path::PathBuf;
+use structopt::StructOpt;
 
 #[derive(StructOpt, Debug)]
 #[structopt(name = "mini-container", about = "A simple container in Rust...")]
@@ -17,8 +17,8 @@ pub struct Args {
     pub uid: u32,
 
     // Directory to mount as root of the container
-    #[structopt(parse(from_os_str), short="m", long ="mount")]
-    pub mount_dir: PathBuf
+    #[structopt(parse(from_os_str), short = "m", long = "mount")]
+    pub mount_dir: PathBuf,
 }
 
 pub fn parse_args() -> Result<Args, Errcode> {
@@ -30,7 +30,7 @@ pub fn parse_args() -> Result<Args, Errcode> {
     }
 
     if !args.mount_dir.exists() || !args.mount_dir.is_dir() {
-        return Err(Errcode::ArgumentInvalid("mount"))
+        return Err(Errcode::ArgumentInvalid("mount"));
     }
     Ok(args)
 }

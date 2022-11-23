@@ -5,6 +5,8 @@ use std::process::exit;
 #[derive(Debug)]
 pub enum Errcode {
     ArgumentInvalid(&'static str),
+    ContainerError(u8),
+    NotSupported(u8),
 }
 
 impl Errcode {
@@ -18,7 +20,7 @@ impl fmt::Display for Errcode {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         match &self {
             Errcode::ArgumentInvalid(element) => write!(f, "ArgumentInvalid: {}", element),
-            _ => write!(f, "{:?}", self)
+            _ => write!(f, "{:?}", self),
         }
     }
 }

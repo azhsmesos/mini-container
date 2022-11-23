@@ -1,16 +1,19 @@
-use std::process::exit;
 use crate::errors::exit_with_ret_code;
+use std::process::exit;
+
+#[macro_use] extern crate scan_fmt;
 
 mod cli;
-mod errors;
 mod config;
+mod container;
+mod errors;
 
 fn main() {
     let args = cli::parse_args();
     match args {
         Ok(ar) => {
             log::info!("{:?}", ar);
-            exit_with_ret_code(Ok(()));
+            exit_with_ret_code(container::start(ar));
         }
         Err(e) => {
             log::error!("Error while parsing arguments: \n\t{}", e);
