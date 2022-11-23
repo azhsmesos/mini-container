@@ -1,12 +1,14 @@
 use crate::errors::exit_with_ret_code;
 use std::process::exit;
 
-#[macro_use] extern crate scan_fmt;
+#[macro_use]
+extern crate scan_fmt;
 
 mod cli;
 mod config;
 mod container;
 mod errors;
+mod ipc;
 
 fn main() {
     let args = cli::parse_args();
