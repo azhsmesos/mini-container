@@ -13,30 +13,30 @@ pub fn set_syscalls() -> Result<(), Errcode> {
     let clone_new_user: u64 = CloneFlags::CLONE_NEWUSER.bits() as u64;
 
     // Conditionnal syscall deny
-    let syscalls_refuse_ifcomp = [
-        (Syscall::chmod, 1, s_isuid),
-        (Syscall::chmod, 1, s_isgid),
-        (Syscall::fchmod, 1, s_isuid),
-        (Syscall::fchmod, 1, s_isgid),
-        (Syscall::fchmodat, 2, s_isuid),
-        (Syscall::fchmodat, 2, s_isgid),
-        (Syscall::unshare, 0, clone_new_user),
-        (Syscall::clone, 0, clone_new_user),
-        (Syscall::ioctl, 1, TIOCSTI),
-    ];
-
-    // Unconditionnal syscall deny
-    let syscalls_refused = [
-        Syscall::keyctl,
-        Syscall::add_key,
-        Syscall::request_key,
-        Syscall::mbind,
-        Syscall::migrate_pages,
-        Syscall::move_pages,
-        Syscall::set_mempolicy,
-        Syscall::userfaultfd,
-        Syscall::perf_event_open,
-    ];
+    // let syscalls_refuse_ifcomp = [
+    //     (Syscall::chmod, 1, s_isuid),
+    //     (Syscall::chmod, 1, s_isgid),
+    //     (Syscall::fchmod, 1, s_isuid),
+    //     (Syscall::fchmod, 1, s_isgid),
+    //     (Syscall::fchmodat, 2, s_isuid),
+    //     (Syscall::fchmodat, 2, s_isgid),
+    //     (Syscall::unshare, 0, clone_new_user),
+    //     (Syscall::clone, 0, clone_new_user),
+    //     (Syscall::ioctl, 1, TIOCSTI),
+    // ];
+    //
+    // // Unconditionnal syscall deny
+    // let syscalls_refused = [
+    //     Syscall::keyctl,
+    //     Syscall::add_key,
+    //     Syscall::request_key,
+    //     Syscall::mbind,
+    //     Syscall::migrate_pages,
+    //     Syscall::move_pages,
+    //     Syscall::set_mempolicy,
+    //     Syscall::userfaultfd,
+    //     Syscall::perf_event_open,
+    // ];
 
     // if let Ok(mut ctx) = Context::init_with_action(Action::Allow) {
     //     for (sc, ind, biteq) in syscalls_refuse_ifcomp.iter() {
