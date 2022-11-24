@@ -14,8 +14,8 @@ pub fn set_syscalls() -> Result<(), Errcode> {
 
     // Conditionnal syscall deny
     let syscalls_refuse_ifcomp = [
-        (Syscall::chmod, 1, s_isuid),
-        (Syscall::chmod, 1, s_isgid),
+        // (Syscall::chmod, 1, s_isuid),
+        // (Syscall::chmod, 1, s_isgid),
         // (Syscall::fchmod, 1, s_isuid),
         // (Syscall::fchmod, 1, s_isgid),
         // (Syscall::fchmodat, 2, s_isuid),
@@ -27,8 +27,8 @@ pub fn set_syscalls() -> Result<(), Errcode> {
 
     // Unconditionnal syscall deny
     let syscalls_refused = [
-        Syscall::keyctl,
-        Syscall::add_key,
+        // Syscall::keyctl,
+        // Syscall::add_key,
         // Syscall::request_key,
         // Syscall::mbind,
         // Syscall::migrate_pages,
