@@ -89,7 +89,7 @@ pub fn create_directory(path: &PathBuf) -> Result<(), Errcode> {
 }
 
 pub fn unmount_path(path: &PathBuf) -> Result<(), Errcode> {
-    match unmount2(path, MntFlags::MNT_DETACH) {
+    match umount2(path, MntFlags::MNT_DETACH) {
         Ok(_) => Ok(()),
         Err(e) => {
             log::error!("Unable to umount {}: {}", path.to_str().unwrap(), e);
