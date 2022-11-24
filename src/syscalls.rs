@@ -38,23 +38,24 @@ pub fn set_syscalls() -> Result<(), Errcode> {
         // Syscall::perf_event_open,
     ];
 
-    if let Ok(mut ctx) = Context::init_with_action(Action::Allow) {
-        for (sc, ind, biteq) in syscalls_refuse_ifcomp.iter() {
-            refuse_if_comp(&mut ctx, *ind, sc, *biteq)?;
-        }
-
-        for sc in syscalls_refused.iter() {
-            refuse_syscall(&mut ctx, sc)?;
-        }
-
-        if let Err(_) = ctx.load() {
-            return Err(Errcode::SyscallsError(0));
-        }
-
-        Ok(())
-    } else {
-        Err(Errcode::SyscallsError(1))
-    }
+    // if let Ok(mut ctx) = Context::init_with_action(Action::Allow) {
+    //     for (sc, ind, biteq) in syscalls_refuse_ifcomp.iter() {
+    //         refuse_if_comp(&mut ctx, *ind, sc, *biteq)?;
+    //     }
+    //
+    //     for sc in syscalls_refused.iter() {
+    //         refuse_syscall(&mut ctx, sc)?;
+    //     }
+    //
+    //     if let Err(_) = ctx.load() {
+    //         return Err(Errcode::SyscallsError(0));
+    //     }
+    //
+    //     Ok(())
+    // } else {
+    //     Err(Errcode::SyscallsError(1))
+    // }
+    Ok(())
 }
 
 pub fn refuse_syscall(ctx: &mut Context, sc: &Syscall) -> Result<(), Errcode> {
