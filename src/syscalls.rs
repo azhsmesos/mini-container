@@ -1,8 +1,8 @@
 use crate::errors::Errcode;
 use libc::TIOCSTI;
-use nix::sched::CloneFlags;
 use nix::sys::stat::Mode;
-use syscallz::{Action, Cmp, Comparator, Context, Syscall};
+use nix::sched::CloneFlags;
+use syscallz::{Context, Action, Syscall, Comparator, Cmp};
 
 const EPERM: u16 = 1;
 
