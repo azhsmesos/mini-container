@@ -1,7 +1,6 @@
 use crate::errors::Errcode;
-use nix::sys::mman::MsFlags;
 use std::path::PathBuf;
-use nix::mount::mount;
+use nix::mount::{mount, MsFlags};
 
 pub fn set_mount_point(mount_dir: &PathBuf) -> Result<(), Errcode> {
     log::debug!("Setting mount points ...");
