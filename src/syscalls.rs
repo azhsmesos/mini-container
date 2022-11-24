@@ -7,9 +7,25 @@ use syscallz::{Action, Cmp, Comparator, Context, Syscall};
 const EPERM: u16 = 1;
 
 pub fn set_syscalls() -> Result<(), Errcode> {
-    log::debug!("refusing / filtering unwanted syscalls");
+    log::debug!("Refusing / Filtering unwanted syscalls");
+    let s_isuid: u64 = Mode::S_ISUID.bits().into();
+    let s_isgid: u64 = Mode::S_ISGID.bits().into();
+    let clone_new_user: u64 = CloneFlags::CLONE_NEWUSER.bits() as u64;
 
-    // Uncoditionnal syscall deny
+    // Conditionnal syscall deny
+    let syscalls_refuse_ifcomp = [
+        (Syscall::chmod, 1, s_isuid),
+        (Syscall::chmod, 1, s_isgid),
+        (Syscall::fchmod, 1, s_isuid),
+        (Syscall::fchmod, 1, s_isgid),
+        (Syscall::fchmodat, 2, s_isuid),
+        (Syscall::fchmodat, 2, s_isgid),
+        (Syscall::unshare, 0, clone_new_user),
+        (Syscall::clone, 0, clone_new_user),
+        (Syscall::ioctl, 1, TIOCSTI),
+    ];
+
+    // Unconditionnal syscall deny
     let syscalls_refused = [
         Syscall::keyctl,
         Syscall::add_key,
@@ -23,40 +39,18 @@ pub fn set_syscalls() -> Result<(), Errcode> {
     ];
 
     if let Ok(mut ctx) = Context::init_with_action(Action::Allow) {
-        for sc in syscalls_refused.iter() {
-            refuse_syscall(&mut ctx, sc)?;
-        }
-    }
-
-    // Conditionnal syscall deny
-    let s_isuid: u64 = Mode::S_ISUID.bits().into();
-    let s_isgid: u64 = Mode::S_ISGID.bits().into();
-    let clone_new_user: u64 = CloneFlags::CLONE_NEWUSER.bits() as u64;
-
-    let syscalls_refuse_ifcomp = [
-        (Syscall::chmod, 1, s_isuid),
-        (Syscall::chmod, 1, s_isgid),
-        (Syscall::fchmod, 1, s_isuid),
-        (Syscall::fchmod, 1, s_isgid),
-        (Syscall::fchmodat, 2, s_isuid),
-        (Syscall::fchmodat, 2, s_isgid),
-        (Syscall::unshare, 0, clone_new_user),
-        (Syscall::clone, 0, clone_new_user),
-        (Syscall::ioctl, 1, TIOCSTI),
-    ];
-
-    if let Ok(mut ctx) = Context::init_with_action(Action::Allow) {
         for (sc, ind, biteq) in syscalls_refuse_ifcomp.iter() {
             refuse_if_comp(&mut ctx, *ind, sc, *biteq)?;
         }
-    }
 
-    if let Ok(mut ctx) = Context::init_with_action(Action::Allow) {
-        // Configure profile here
+        for sc in syscalls_refused.iter() {
+            refuse_syscall(&mut ctx, sc)?;
+        }
 
         if let Err(_) = ctx.load() {
             return Err(Errcode::SyscallsError(0));
         }
+
         Ok(())
     } else {
         Err(Errcode::SyscallsError(1))
