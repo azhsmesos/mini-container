@@ -8,12 +8,23 @@ use std::path::PathBuf;
 
 pub fn set_mount_point(mount_dir: &PathBuf) -> Result<(), Errcode> {
     log::debug!("Setting mount points ...");
-    mount_directory(None, &PathBuf::from("/"), vec![MsFlags::MS_REC, MsFlags::MS_PRIVATE])?;
+    mount_directory(
+        None,
+        &PathBuf::from("/"),
+        vec![MsFlags::MS_REC, MsFlags::MS_PRIVATE],
+    )?;
 
     let new_root = PathBuf::from(format!("/tmp/mini-container.{}", random_string(12)));
-    log::debug!("Mounting temp directory {}", new_root.as_path().to_str().unwrap());
+    log::debug!(
+        "Mounting temp directory {}",
+        new_root.as_path().to_str().unwrap()
+    );
     create_directory(&new_root)?;
-    mount_directory(Some(&mount_dir), &new_root, vec![MsFlags::MS_BIND, MsFlags::MS_PRIVATE])?;
+    mount_directory(
+        Some(&mount_dir),
+        &new_root,
+        vec![MsFlags::MS_BIND, MsFlags::MS_PRIVATE],
+    )?;
 
     log::debug!("Pivoting root");
     let old_root_tail = format!("oldroot.{}", random_string(6));
