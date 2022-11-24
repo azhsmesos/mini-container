@@ -1,6 +1,7 @@
 use crate::config::ContainerOpts;
 use crate::errors::Errcode;
 use crate::hostname::set_container_hostname;
+use crate::mounts::set_mount_point;
 use nix::sched::clone;
 use nix::sched::CloneFlags;
 use nix::sys::signal::Signal;
@@ -26,6 +27,7 @@ fn child(config: ContainerOpts) -> isize {
 
 fn setup_container_configurations(config: &ContainerOpts) -> Result<(), Errcode> {
     set_container_hostname(&config.hostname)?;
+    set_mount_point(&config.mount_dir)?;
     Ok(())
 }
 

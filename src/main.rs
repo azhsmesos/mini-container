@@ -11,6 +11,7 @@ mod container;
 mod errors;
 mod hostname;
 mod ipc;
+mod mounts;
 
 fn main() {
     let args = cli::parse_args();

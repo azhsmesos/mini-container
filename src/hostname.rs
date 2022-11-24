@@ -3,13 +3,9 @@ use nix::unistd::sethostname;
 use rand::seq::SliceRandom;
 use rand::Rng;
 
-const HOSTNAME_NAMES: [&'static str; 1] = [
-    "heitx",
-];
+const HOSTNAME_NAMES: [&'static str; 1] = ["heitx"];
 
-const HOSTNAME_ADJ: [&'static str; 1] = [
-    "bin",
-];
+const HOSTNAME_ADJ: [&'static str; 1] = ["bin"];
 
 pub fn generate_hostname() -> Result<String, Errcode> {
     let mut rng = rand::thread_rng();
