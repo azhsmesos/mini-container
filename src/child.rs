@@ -38,7 +38,7 @@ fn setup_container_configurations(config: &ContainerOpts) -> Result<(), Errcode>
     set_mount_point(&config.mount_dir)?;
     user_namespace(config.fd, config.uid)?;
     set_capabilities()?;
-    set_syscalls()?;
+    // set_syscalls()?;
     Ok(())
 }
 
