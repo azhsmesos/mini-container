@@ -8,9 +8,9 @@ const EPERM: u16 = 1;
 
 pub fn set_syscalls() -> Result<(), Errcode> {
     log::debug!("Refusing / Filtering unwanted syscalls");
-    let s_isuid: u64 = Mode::S_ISUID.bits().into();
-    let s_isgid: u64 = Mode::S_ISGID.bits().into();
-    let clone_new_user: u64 = CloneFlags::CLONE_NEWUSER.bits() as u64;
+    // let s_isuid: u64 = Mode::S_ISUID.bits().into();
+    // let s_isgid: u64 = Mode::S_ISGID.bits().into();
+    // let clone_new_user: u64 = CloneFlags::CLONE_NEWUSER.bits() as u64;
 
     // Conditionnal syscall deny
     let syscalls_refuse_ifcomp = [
