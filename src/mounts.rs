@@ -2,7 +2,6 @@ use crate::errors::Errcode;
 use nix::mount::{mount, umount2, MntFlags, MsFlags};
 use nix::unistd::{chdir, pivot_root};
 use rand::Rng;
-use std::fmt::format;
 use std::fs::{create_dir_all, remove_dir};
 use std::path::PathBuf;
 
