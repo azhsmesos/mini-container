@@ -61,7 +61,7 @@ pub fn clean_cgroups(hostname: &String) -> Result<(), Errcode> {
             }
         }
         Err(e) => {
-            log::error!("Error while canonicalize path: {}", e);
+            log::error!("Error while canonicalize path: {}, error: {}", hostname, e);
             return Err(Errcode::ResourcesError(3));
         }
     }
