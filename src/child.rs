@@ -7,6 +7,7 @@ use nix::sched::clone;
 use nix::sched::CloneFlags;
 use nix::sys::signal::Signal;
 use nix::unistd::{close, Pid};
+use crate::capabilities::set_capabilities;
 
 const STACK_SIZE: usize = 1024 * 1024;
 
@@ -35,6 +36,7 @@ fn setup_container_configurations(config: &ContainerOpts) -> Result<(), Errcode>
     set_container_hostname(&config.hostname)?;
     set_mount_point(&config.mount_dir)?;
     user_namespace(config.fd, config.uid)?;
+    set_capabilities()?;
     Ok(())
 }
 

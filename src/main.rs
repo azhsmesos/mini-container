@@ -4,6 +4,7 @@ use std::process::exit;
 #[macro_use]
 extern crate scan_fmt;
 
+mod capabilities;
 mod child;
 mod cli;
 mod config;
