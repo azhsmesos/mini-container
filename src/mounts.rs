@@ -8,7 +8,7 @@ use std::path::PathBuf;
 
 pub fn set_mount_point(mount_dir: &PathBuf) -> Result<(), Errcode> {
     log::debug!("Setting mount points ...");
-    let new_root = PathBuf::from(format!("/tmp/mini-container.{}", random_string(5)));
+    let new_root = PathBuf::from(format!("/tmp/mini-container.{}", random_string(12)));
     log::debug!("Mounting temp directory {}", new_root.to_str().unwrap());
     create_directory(&new_root)?;
     mount_directory(
@@ -18,7 +18,7 @@ pub fn set_mount_point(mount_dir: &PathBuf) -> Result<(), Errcode> {
     )?;
 
     log::debug!("Pivoting root");
-    let old_root_tail = format!("oldroot.{}", random_string(5));
+    let old_root_tail = format!("oldroot.{}", random_string(6));
     let put_old = new_root.join(PathBuf::from(old_root_tail.clone()));
     create_directory(&put_old)?;
     if let Err(_) = pivot_root(&new_root, &put_old) {
@@ -67,14 +67,18 @@ pub fn mount_directory(
 }
 
 pub fn random_string(n: usize) -> String {
-    const CHAR_SET: &[u8] = b"ABCDEFGabcdefg12345";
+    const CHARSET: &[u8] = b"ABCDEFGHIJKLMNOPQRSTUVWXYZ\
+                            abcdefghijklmnopqrstuvwxyz\
+                            0123456789";
     let mut rng = rand::thread_rng();
+
     let name: String = (0..n)
         .map(|_| {
-            let idx = rng.gen_range(0..CHAR_SET.len());
-            CHAR_SET[idx] as char
+            let idx = rng.gen_range(0..CHARSET.len());
+            CHARSET[idx] as char
         })
         .collect();
+
     name
 }
 
