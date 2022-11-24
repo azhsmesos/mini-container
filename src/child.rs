@@ -4,7 +4,7 @@ use crate::errors::Errcode;
 use crate::hostname::set_container_hostname;
 use crate::mounts::set_mount_point;
 use crate::namespace::user_namespace;
-use crate::syscalls::set_syscalls;
+// use crate::syscalls::set_syscalls;
 use nix::sched::clone;
 use nix::sched::CloneFlags;
 use nix::sys::signal::Signal;
