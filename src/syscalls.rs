@@ -58,10 +58,11 @@ pub fn set_syscalls() -> Result<(), Errcode> {
 }
 
 pub fn refuse_syscall(ctx: &mut Context, sc: &Syscall) -> Result<(), Errcode> {
-    match ctx.set_action_for_syscall(Action::Errno(EPERM), *sc) {
-        Ok(_) => Ok(()),
-        Err(_) => Err(Errcode::SyscallsError(2)),
-    }
+    // match ctx.set_action_for_syscall(Action::Errno(EPERM), *sc) {
+    //     Ok(_) => Ok(()),
+    //     Err(_) => Err(Errcode::SyscallsError(2)),
+    // }
+    Ok(())
 }
 
 pub fn refuse_if_comp(
@@ -70,12 +71,13 @@ pub fn refuse_if_comp(
     sc: &Syscall,
     biteq: u64,
 ) -> Result<(), Errcode> {
-    match ctx.set_rule_for_syscall(
-        Action::Errno(EPERM),
-        *sc,
-        &[Comparator::new(ind, Cmp::MaskedEq, biteq, Some(biteq))],
-    ) {
-        Ok(_) => Ok(()),
-        Err(_) => Err(Errcode::SyscallsError(3)),
-    }
+    // match ctx.set_rule_for_syscall(
+    //     Action::Errno(EPERM),
+    //     *sc,
+    //     &[Comparator::new(ind, Cmp::MaskedEq, biteq, Some(biteq))],
+    // ) {
+    //     Ok(_) => Ok(()),
+    //     Err(_) => Err(Errcode::SyscallsError(3)),
+    // }
+    Ok(())
 }
