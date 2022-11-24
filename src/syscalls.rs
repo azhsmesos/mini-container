@@ -1,8 +1,8 @@
 use crate::errors::Errcode;
-use libc::TIOCSTI;
-use nix::sys::stat::Mode;
-use nix::sched::CloneFlags;
-use syscallz::{Context, Action, Syscall, Comparator, Cmp};
+// use libc::TIOCSTI;
+// use nix::sys::stat::Mode;
+// use nix::sched::CloneFlags;
+// use syscallz::{Context, Action, Syscall, Comparator, Cmp};
 
 const EPERM: u16 = 1;
 
@@ -57,28 +57,28 @@ pub fn set_syscalls() -> Result<(), Errcode> {
     // }
     Ok(())
 }
-
-pub fn refuse_syscall(ctx: &mut Context, sc: &Syscall) -> Result<(), Errcode> {
-    // match ctx.set_action_for_syscall(Action::Errno(EPERM), *sc) {
-    //     Ok(_) => Ok(()),
-    //     Err(_) => Err(Errcode::SyscallsError(2)),
-    // }
-    Ok(())
-}
-
-pub fn refuse_if_comp(
-    ctx: &mut Context,
-    ind: u32,
-    sc: &Syscall,
-    biteq: u64,
-) -> Result<(), Errcode> {
-    // match ctx.set_rule_for_syscall(
-    //     Action::Errno(EPERM),
-    //     *sc,
-    //     &[Comparator::new(ind, Cmp::MaskedEq, biteq, Some(biteq))],
-    // ) {
-    //     Ok(_) => Ok(()),
-    //     Err(_) => Err(Errcode::SyscallsError(3)),
-    // }
-    Ok(())
-}
+//
+// pub fn refuse_syscall(ctx: &mut Context, sc: &Syscall) -> Result<(), Errcode> {
+//     match ctx.set_action_for_syscall(Action::Errno(EPERM), *sc) {
+//         Ok(_) => Ok(()),
+//         Err(_) => Err(Errcode::SyscallsError(2)),
+//     }
+//     Ok(())
+// }
+//
+// pub fn refuse_if_comp(
+//     ctx: &mut Context,
+//     ind: u32,
+//     sc: &Syscall,
+//     biteq: u64,
+// ) -> Result<(), Errcode> {
+//     match ctx.set_rule_for_syscall(
+//         Action::Errno(EPERM),
+//         *sc,
+//         &[Comparator::new(ind, Cmp::MaskedEq, biteq, Some(biteq))],
+//     ) {
+//         Ok(_) => Ok(()),
+//         Err(_) => Err(Errcode::SyscallsError(3)),
+//     }
+//     Ok(())
+// }
