@@ -1,5 +1,5 @@
 use crate::errors::Errcode;
-// use libc::TIOCSTI;
+use libc::TIOCSTI;
 // use nix::sys::stat::Mode;
 // use nix::sched::CloneFlags;
 // use syscallz::{Context, Action, Syscall, Comparator, Cmp};
