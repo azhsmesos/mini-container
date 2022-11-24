@@ -7,35 +7,35 @@ use syscallz::{Context, Action, Syscall, Comparator, Cmp};
 const EPERM: u16 = 1;
 
 pub fn set_syscalls() -> Result<(), Errcode> {
-    log::debug!("Refusing / Filtering unwanted syscalls");
-    // let s_isuid: u64 = Mode::S_ISUID.bits().into();
-    // let s_isgid: u64 = Mode::S_ISGID.bits().into();
-    // let clone_new_user: u64 = CloneFlags::CLONE_NEWUSER.bits() as u64;
+    // log::debug!("Refusing / Filtering unwanted syscalls");
+    // // let s_isuid: u64 = Mode::S_ISUID.bits().into();
+    // // let s_isgid: u64 = Mode::S_ISGID.bits().into();
+    // // let clone_new_user: u64 = CloneFlags::CLONE_NEWUSER.bits() as u64;
 
     // Conditionnal syscall deny
     let syscalls_refuse_ifcomp = [
-        // (Syscall::chmod, 1, s_isuid),
-        // (Syscall::chmod, 1, s_isgid),
-        // (Syscall::fchmod, 1, s_isuid),
-        // (Syscall::fchmod, 1, s_isgid),
-        // (Syscall::fchmodat, 2, s_isuid),
-        // (Syscall::fchmodat, 2, s_isgid),
-        // (Syscall::unshare, 0, clone_new_user),
-        // (Syscall::clone, 0, clone_new_user),
-        // (Syscall::ioctl, 1, TIOCSTI),
+        (Syscall::chmod, 1, s_isuid),
+        (Syscall::chmod, 1, s_isgid),
+        (Syscall::fchmod, 1, s_isuid),
+        (Syscall::fchmod, 1, s_isgid),
+        (Syscall::fchmodat, 2, s_isuid),
+        (Syscall::fchmodat, 2, s_isgid),
+        (Syscall::unshare, 0, clone_new_user),
+        (Syscall::clone, 0, clone_new_user),
+        (Syscall::ioctl, 1, TIOCSTI),
     ];
 
     // Unconditionnal syscall deny
     let syscalls_refused = [
-        // Syscall::keyctl,
-        // Syscall::add_key,
-        // Syscall::request_key,
-        // Syscall::mbind,
-        // Syscall::migrate_pages,
-        // Syscall::move_pages,
-        // Syscall::set_mempolicy,
-        // Syscall::userfaultfd,
-        // Syscall::perf_event_open,
+        Syscall::keyctl,
+        Syscall::add_key,
+        Syscall::request_key,
+        Syscall::mbind,
+        Syscall::migrate_pages,
+        Syscall::move_pages,
+        Syscall::set_mempolicy,
+        Syscall::userfaultfd,
+        Syscall::perf_event_open,
     ];
 
     // if let Ok(mut ctx) = Context::init_with_action(Action::Allow) {
