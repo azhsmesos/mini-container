@@ -4,11 +4,11 @@ use crate::config::ContainerOpts;
 use crate::errors::Errcode;
 use crate::mounts::clean_mounts;
 use crate::namespace::handle_child_uid_map;
+use crate::resources::{clean_cgroups, restrict_resources};
 use nix::sys::utsname::uname;
 use nix::sys::wait::waitpid;
 use nix::unistd::{close, Pid};
 use std::os::unix::io::RawFd;
-use crate::resources::restrict_resources;
 
 pub const MINIMAL_KERNEL_VERSION: f32 = 4.8;
 
@@ -48,6 +48,11 @@ impl Container {
         if let Err(e) = close(self.sockets.1) {
             log::error!("Unable to close read socket: {:?}", e);
             return Err(Errcode::SocketError(4));
+        }
+
+        if let Err(e) = clean_cgroups(&self.config.hostname) {
+            log::error!("Cgroups cleaning failed: {}", e);
+            return Err(e);
         }
         Ok(())
     }
