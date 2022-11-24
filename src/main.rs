@@ -15,6 +15,7 @@ mod ipc;
 mod mounts;
 mod namespace;
 mod syscalls;
+mod resources;
 
 fn main() {
     let args = cli::parse_args();

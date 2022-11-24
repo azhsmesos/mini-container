@@ -8,6 +8,7 @@ use nix::sys::utsname::uname;
 use nix::sys::wait::waitpid;
 use nix::unistd::{close, Pid};
 use std::os::unix::io::RawFd;
+use crate::resources::restrict_resources;
 
 pub const MINIMAL_KERNEL_VERSION: f32 = 4.8;
 
@@ -29,6 +30,7 @@ impl Container {
 
     pub fn create(&mut self) -> Result<(), Errcode> {
         let pid = generate_child_process(self.config.clone())?;
+        restrict_resources(&self.config.hostname, pid)?;
         handle_child_uid_map(pid, self.sockets.0)?;
         self.child_pid = Some(pid);
         log::debug!("creation finished");
