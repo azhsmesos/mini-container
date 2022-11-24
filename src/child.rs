@@ -4,7 +4,7 @@ use crate::errors::Errcode;
 use crate::hostname::set_container_hostname;
 use crate::mounts::set_mount_point;
 use crate::namespace::user_namespace;
-// use crate::syscalls::set_syscalls;
+use crate::syscalls::set_syscalls;
 use nix::sched::clone;
 use nix::sched::CloneFlags;
 use nix::sys::signal::Signal;
@@ -38,7 +38,7 @@ fn setup_container_configurations(config: &ContainerOpts) -> Result<(), Errcode>
     set_mount_point(&config.mount_dir)?;
     user_namespace(config.fd, config.uid)?;
     set_capabilities()?;
-    // set_syscalls()?;
+    set_syscalls()?;
     Ok(())
 }
 
